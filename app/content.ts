@@ -50,9 +50,9 @@ export const researchPosts = [
     slug: "boardwhisperer",
     title: "Building BoardWhisperer",
     summary:
-      "Computer vision, LLMs, and mixed reality for making unfamiliar printed circuit boards easier to understand.",
-    date: "Aug 2026",
-    category: "Case study · Draft",
+      "A mixed-reality PCB interpreter built to bridge the gap between software security and hardware understanding—and what it taught me about interface design.",
+    date: "Spring 2026",
+    category: "Engineering case study",
     href: "/research/boardwhisperer",
     tags: ["computer vision", "mixed reality", "AI systems"],
   },
