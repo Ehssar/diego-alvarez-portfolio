@@ -69,7 +69,7 @@ export default function Home() {
 
         <div className="research-list">
           {researchPosts.map((post) => (
-            <Link className="research-row" href={post.href} key={post.slug}>
+            <Link className={`research-row${post.slug === "in-the-lab" ? " upcoming-row" : ""}`} href={post.href} key={post.slug}>
               <span className="mono-meta">{post.date}</span>
               <div>
                 <h3>{post.title}</h3>
@@ -78,14 +78,6 @@ export default function Home() {
               <span className="research-category">{post.category}</span>
             </Link>
           ))}
-          <div className="research-row upcoming-row">
-            <span className="mono-meta">Fall ’26</span>
-            <div>
-              <h3>Independent systems experiments</h3>
-              <p>Build logs, architecture notes, and honest retrospectives as the next project takes shape.</p>
-            </div>
-            <span className="research-category">In the lab</span>
-          </div>
         </div>
       </section>
 
