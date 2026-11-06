@@ -14,6 +14,8 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
+const pagesBasePath = process.env.GITHUB_PAGES === "true" ? "/diego-alvarez-portfolio" : "";
+
 export const metadata: Metadata = {
   title: {
     default: "Diego Alvarez Rodriguez · Software Engineer",
@@ -21,8 +23,8 @@ export const metadata: Metadata = {
   },
   description: "Technical projects and writing across cybersecurity, AI/ML systems, distributed systems, and developer tooling.",
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
+    icon: `${pagesBasePath}/favicon.svg`,
+    shortcut: `${pagesBasePath}/favicon.svg`,
   },
 };
 
