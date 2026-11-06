@@ -5,6 +5,8 @@ import { SiteHeader } from "../components/SiteHeader";
 import { researchPosts } from "../content";
 
 export default function ResearchPage() {
+  const labPost = researchPosts.find((post) => post.slug === "in-the-lab");
+
   return (
     <main>
       <SiteHeader />
@@ -30,11 +32,14 @@ export default function ResearchPage() {
           ))}
         </div>
 
-        <aside className="in-the-lab">
-          <p className="eyebrow"><span className="status-dot" /> In the lab</p>
-          <h2>Next-semester projects will start here before they are polished.</h2>
-          <p>Expect architecture notes, measurements, failed approaches, and shorter build logs alongside finished case studies.</p>
-        </aside>
+        {labPost && (
+          <aside className="in-the-lab">
+            <p className="eyebrow"><span className="status-dot" /> {labPost.category}</p>
+            <h2>{labPost.title}</h2>
+            <p>{labPost.summary}</p>
+            <Link className="text-link" href={labPost.href}>Explore the lab →</Link>
+          </aside>
+        )}
       </div>
       <SiteFooter />
     </main>
