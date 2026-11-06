@@ -1,256 +1,376 @@
+import type { Metadata } from "next";
 import Link from "next/link";
-import { SiteFooter } from "../../components/SiteFooter";
 import { SiteHeader } from "../../components/SiteHeader";
+import { SiteFooter } from "../../components/SiteFooter";
 
-const architecture = [
-  ["01", "Capture", "Meta Quest 3S passthrough captures the unfamiliar board from the user’s point of view."],
-  ["02", "Detect", "A FastAPI service sends the image through a PCB component-detection model."],
-  ["03", "Enrich", "Concurrent LLM requests turn raw detections into short, readable explanations."],
-  ["04", "Structure", "The backend returns component-level data as compact JSON for the Unity client."],
-  ["05", "Annotate", "Unity renders labels, highlights, filters, and details around the physical board."],
-];
-
-type OutlineSectionProps = {
-  id: string;
-  number: string;
-  label: string;
-  heading: string;
-  purpose: string;
-  prompts: string[];
-  evidence: string[];
-  visual?: string;
+export const metadata: Metadata = {
+  title: "Building BoardWhisperer",
+  description: "An engineering case study of BoardWhisperer: a mixed-reality PCB interpreter, and what building it taught me about making AI useful.",
 };
 
-function OutlineSection({ id, number, label, heading, purpose, prompts, evidence, visual }: OutlineSectionProps) {
-  return (
-    <section id={id} className="outline-section">
-      <p className="section-number">{number} / {label}</p>
-      <h2>{heading}</h2>
-      <p className="outline-purpose"><strong>Purpose.</strong> {purpose}</p>
-      <div className="outline-grid">
-        <div className="outline-card">
-          <p className="outline-label">Questions to answer</p>
-          <ul>{prompts.map((prompt) => <li key={prompt}>{prompt}</li>)}</ul>
-        </div>
-        <div className="outline-card outline-card-muted">
-          <p className="outline-label">Evidence to pull forward</p>
-          <ul>{evidence.map((item) => <li key={item}>{item}</li>)}</ul>
-        </div>
-      </div>
-      {visual && <p className="visual-note"><span>Suggested visual</span>{visual}</p>}
-    </section>
-  );
-}
+const sections = [
+  ["motivation", "Why I built it"],
+  ["problem", "The problem"],
+  ["approach", "The approach"],
+  ["architecture", "Architecture"],
+  ["interface", "Engineering the interface"],
+  ["tradeoffs", "Hard tradeoffs"],
+  ["walkthrough", "The experience"],
+  ["results", "Results & evaluation"],
+  ["limitations", "Limitations"],
+  ["future", "What I would build next"],
+  ["takeaways", "What I learned"],
+];
 
 export default function BoardWhispererCaseStudy() {
   return (
     <main>
       <SiteHeader />
-      <article className="article shell">
+      <article className="article shell case-study">
         <header className="article-header">
           <div className="article-kicker">
-            <span>Working outline</span><span>BoardWhisperer · Aug 2026</span><span>First post</span>
+            <span>Independent work · Princeton University</span>
+            <span>Spring 2026</span>
+            <span>Engineering case study</span>
           </div>
           <h1>Building BoardWhisperer</h1>
-          <p className="article-deck">A comprehensive writing structure for explaining how mixed reality, computer vision, and language models turned an unfamiliar PCB into an interactive annotated workspace.</p>
+          <p className="article-deck">
+            I wanted to understand the hardware beneath cybersecurity research.
+            I built a mixed-reality PCB interpreter—and learned that useful AI
+            is as much an interface problem as a computation problem.
+          </p>
           <div className="article-tag-row">
-            <span>Computer vision</span><span>Mixed reality</span><span>Human–AI interaction</span><span>Unity</span>
+            <span>Mixed reality</span><span>Computer vision</span>
+            <span>AI systems</span><span>Unity / C#</span><span>Python / FastAPI</span>
           </div>
         </header>
 
-        <section className="article-hero-visual">
-          <div className="article-hero-art" aria-hidden="true" />
-          <div className="article-metrics">
-            <div><strong>60</strong><span>component instances</span></div>
-            <div><strong>4</strong><span>physical PCBs</span></div>
-            <div><strong>95%</strong><span>average confidence</span></div>
-            <div><strong>65%</strong><span>latency reduction</span></div>
-          </div>
-        </section>
-
         <div className="article-layout">
           <aside className="article-toc">
-            <p className="eyebrow">Outline</p>
-            <a href="#opening">Opening scene</a>
-            <a href="#problem">Problem & stakes</a>
-            <a href="#thesis">Design thesis</a>
-            <a href="#system">System at a glance</a>
-            <a href="#build">Building the prototype</a>
-            <a href="#tradeoffs">Hard tradeoffs</a>
-            <a href="#demo">Demo walkthrough</a>
-            <a href="#evaluation">Evaluation</a>
-            <a href="#limitations">Where it breaks</a>
-            <a href="#lessons">Lessons learned</a>
-            <a href="#future">Future work</a>
-            <a href="#closing">Closing idea</a>
+            <p className="eyebrow">In this article</p>
+            {sections.map(([id, title]) => <a key={id} href={`#${id}`}>{title}</a>)}
           </aside>
 
-          <div className="article-body">
-            <div className="outline-notice">
-              <p className="outline-label">How to use this page</p>
-              <p>This is intentionally an outline rather than a draft. Each section gives the job that part of the article should perform, the questions your prose should answer, the strongest evidence already available, and a visual that could carry part of the explanation.</p>
-            </div>
-
-            <OutlineSection id="opening" number="01" label="Opening scene" heading="Begin with the moment the board stops being legible." purpose="Give the reader a concrete, human reason to care before introducing the technology. The post should open on a person confronting an unfamiliar PCB—not on a list of frameworks." prompts={[
-              "What does the user physically see: dense components, tiny markings, and no trustworthy schematic?",
-              "What is the first question they are trying to answer about the board?",
-              "What does the conventional workflow force them to do next—search, consult a datasheet, take notes, and map everything back by hand?",
-              "What personal observation or project moment made this friction feel worth solving?",
-            ]} evidence={[
-              "The paper’s central tension: attention repeatedly shifts between the physical artifact and external references.",
-              "Reverse-engineering contexts may involve unavailable, incomplete, or intentionally obscured schematics.",
-              "The project was shaped by hardware debugging, repair, security assessment, and electronics-learning use cases.",
-            ]} visual="A clean photograph of an unfamiliar PCB with one small region highlighted, paired with a short caption asking what the components in that region do." />
-
-            <OutlineSection id="problem" number="02" label="Problem & stakes" heading="The hard part is not finding information. It is mapping information back to the board." purpose="Define the workflow problem precisely and distinguish BoardWhisperer from a generic object detector or chatbot." prompts={[
-              "Why are PCBs unusually difficult visual objects to interpret?",
-              "How do scale, density, occlusion, similar-looking components, and uncertainty compound one another?",
-              "Why does context switching matter during hands-on technical work?",
-              "Who benefits if board inspection becomes more continuous and learnable?",
-            ]} evidence={[
-              "The paper identifies repeated physical-to-digital remapping as a major source of effort.",
-              "Prior AR PCB systems generally support known assembly, repair, or debugging workflows; this project focuses on unfamiliar boards.",
-              "Possible audiences include security researchers, repair technicians, engineers, and electronics learners.",
-            ]} visual="A simple before-and-after workflow: board → laptop/search/datasheet → board versus board → in-context annotation." />
-
-            <OutlineSection id="thesis" number="03" label="Design thesis" heading="Keep the PCB—not the software—at the center of the interaction." purpose="State the post’s governing idea. This should become the lens through which every technical decision is explained." prompts={[
-              "Why is mixed reality a better fit for this spatial problem than another flat screen?",
-              "What does “in-situ” or “in-context” mean in practical interaction terms?",
-              "Which three goals shaped the design: in-context interpretation, low interaction overhead, and legible spatial guidance?",
-              "What does the system deliberately avoid doing for the user?",
-            ]} evidence={[
-              "Annotations remain around the physical board rather than replacing it.",
-              "The system supports reasoning under uncertainty instead of claiming to recover a complete schematic.",
-              "The PCB remains the primary viewing and interaction surface throughout the workflow.",
-            ]} visual="One strong pull quote over a quiet image: “The PCB itself should remain the center of interaction.”" />
-
-            <section id="system" className="outline-section">
-              <p className="section-number">04 / System at a glance</p>
-              <h2>Give readers the entire journey before zooming into implementation.</h2>
-              <p className="outline-purpose"><strong>Purpose.</strong> Establish a mental model that makes every later section easier to follow. Keep this explanation functional and visual.</p>
-              <div className="architecture-flow">
-                {architecture.map(([number, title, description]) => (
-                  <div key={number}><span>{number}</span><h3>{title}</h3><p>{description}</p></div>
-                ))}
-              </div>
-              <div className="outline-card">
-                <p className="outline-label">Questions to answer</p>
-                <ul>
-                  <li>What crosses the Unity–FastAPI boundary at each stage?</li>
-                  <li>What responsibility belongs to computer vision, to the LLM, and to the interface?</li>
-                  <li>Why is structured JSON the useful seam between analysis and presentation?</li>
-                  <li>What can the user do after annotations appear?</li>
-                </ul>
-              </div>
-              <p className="visual-note"><span>Suggested visual</span>Reuse the paper’s three-stage workflow image: captured board, backend detections, and final mixed-reality output.</p>
+          <div className="article-body case-prose">
+            <section id="motivation">
+              <p className="section-number">01 / Motivation</p>
+              <h2>Learning to read what is in front of me.</h2>
+              <p>
+                My background is in software and cybersecurity research. Lately,
+                I had become interested in hardware attacks, but there was a
+                fundamental gap in my understanding: I could reason about
+                software with some familiarity, yet I did not know how to look
+                at a printed circuit board and understand what its components
+                were doing.
+              </p>
+              <p>
+                Hardware security demands a similarly intimate understanding
+                of a device to the one software security demands of code. A PCB
+                is not just a collection of anonymous parts; it is a physical
+                record of a system's design. Without experience reading one,
+                even knowing where to begin can be difficult.
+              </p>
+              <p>
+                I wanted to build a tool that would help me—and other people
+                crossing into hardware work—bridge that gap. Augmented reality
+                seemed especially promising because the object I wanted to
+                understand was already in front of me. Instead of turning away
+                to research every part, what if I could ask for information
+                directly in the space where I was inspecting the board?
+              </p>
+              <p>
+                That became BoardWhisperer: a prototype that captures an
+                unfamiliar PCB, identifies likely components, and presents
+                explanations as interactive annotations in mixed reality.
+              </p>
             </section>
 
-            <OutlineSection id="build" number="05" label="Building the prototype" heading="Explain the frontend and backend as answers to different design problems." purpose="Make the implementation technically satisfying without turning the post into framework documentation. Organize this section around responsibilities and decisions." prompts={[
-              "Frontend: how does Unity use world-space panels, labels, hover states, grabbing, and controller input?",
-              "Board Overlay: why were floating labels alone insufficient, and how do red, yellow, and orange highlights restore correspondence?",
-              "Visibility: how do Details Mode, category filtering, and toggleable panels manage dense information?",
-              "Backend: how do FastAPI, the PCB detector, concurrent LLM enrichment, and compact responses cooperate?",
-              "What did the first working end-to-end version look like compared with the final prototype?",
-            ]} evidence={[
-              "Meta Quest 3S, Unity, Meta XR components, and Meta UI Set on the frontend.",
-              "FastAPI, Roboflow’s printed-circuit-board/3 detector, and language-model enrichment on the backend.",
-              "Controller interactions: capture, Details Mode, Visibility Panel, and Board Overlay toggles.",
-              "Component labels can be repositioned and expanded or reduced for visibility.",
-            ]} visual="A two-column annotated screenshot: Unity interface behaviors on one side and a compact request/response example on the other." />
+            <section id="problem">
+              <p className="section-number">02 / The problem</p>
+              <h2>Finding information is only half the work.</h2>
+              <p>
+                Printed circuit boards can be dense, visually repetitive, and
+                poorly documented. In repair, debugging, and reverse engineering,
+                a schematic may be incomplete or absent. Identifying a
+                component can mean reading tiny markings, searching for a
+                datasheet, inferring its function, then finding the same part
+                again on the physical board.
+              </p>
+              <p>
+                Each switch from board to screen and back introduces another
+                opportunity to lose context. The goal was not to recover a
+                complete circuit schematic automatically. It was to make that
+                exploratory first pass more approachable: show plausible
+                component identities, make their locations understandable,
+                and let the user control what information stays visible.
+              </p>
+            </section>
 
-            <OutlineSection id="tradeoffs" number="06" label="Hard tradeoffs" heading="The interesting engineering lives between correctness, latency, and legibility." purpose="Turn the post from a project summary into an engineering story by showing the tensions you had to manage." prompts={[
-              "Detection versus explanation: what can enrichment clarify, and what can it never repair if detection is wrong?",
-              "Speed versus richness: which prompt, image, and context choices improved output but damaged the interaction rhythm?",
-              "Completeness versus clutter: when does showing more information make the system less useful?",
-              "Interaction richness versus reliability: why did grabbing, hovering, ray selection, and buttons interfere with one another?",
-              "Which optimization produced the 65% latency reduction, and what did you give up—if anything—to achieve it?",
-            ]} evidence={[
-              "End-to-end processing improved from 45–55 seconds to 15–20 seconds through concurrency, batching, and payload optimization.",
-              "Upstream recognition quality bounds downstream explanation quality.",
-              "Dense labels motivated filtering, detail toggles, and the Board Overlay.",
-              "Mixed-reality interaction behaviors occasionally overrode one another despite separate controls and interactors.",
-            ]} visual="A three-way tradeoff diagram labeled Recognition quality, Response time, and Spatial legibility, with concrete project decisions around the edges." />
+            <section id="approach">
+              <p className="section-number">03 / Design approach</p>
+              <h2>Keep the board at the center.</h2>
+              <p>
+                Three goals shaped the prototype: interpret components in
+                context, minimize the effort of switching tools, and make
+                spatial guidance legible. I deliberately chose a
+                capture-and-analyze workflow rather than promising continuous
+                real-time recognition. The user takes a single image, waits
+                for analysis, and then inspects the results as a stable session.
+              </p>
+              <p>
+                Interactivity was essential. Every PCB is different, and a
+                fixed arrangement of labels can become useless on a crowded
+                board. Users needed to move labels, turn descriptions on and
+                off, filter by component category, and restore the connection
+                between a floating label and the physical region it described.
+              </p>
+            </section>
 
-            <OutlineSection id="demo" number="07" label="Demo walkthrough" heading="Let one inspection session carry the reader through the experience." purpose="Translate the architecture into a sequence a reader can imagine performing. This is the natural place to embed the extended demo." prompts={[
-              "How does the user prepare the board and adjust the Visibility Panel?",
-              "What makes a capture good enough for analysis?",
-              "What does the user see while waiting, when labels spawn, and while inspecting a local region?",
-              "How do filtering, hover highlights, details, and label movement support a focused question?",
-              "What did a real user notice or do that surprised you during evaluation?",
-            ]} evidence={[
-              "The paper’s scenario moves from capture to detection to world-space inspection.",
-              "The board overlay connects floating annotations back to exact component regions.",
-              "Filtering by component category reduces the amount of visible information.",
-              "Approximately ten multidisciplinary engineers evaluated the prototype.",
-            ]} visual="Embed the extended demo, followed by four timestamped stills: capture, processing, annotation, and filtered inspection." />
+            <section id="architecture">
+              <p className="section-number">04 / System architecture</p>
+              <h2>From a captured board to an annotated workspace.</h2>
+              <figure className="case-architecture">
+                <div className="case-stage">
+                  <span className="case-stage-number">01 / Capture</span>
+                  <strong>Meta Quest 3S</strong>
+                  <p>Passthrough camera captures a PCB image on user input.</p>
+                </div>
+                <div className="case-stage-arrow" aria-hidden="true">↓</div>
+                <div className="case-stage">
+                  <span className="case-stage-number">02 / Backend analysis</span>
+                  <strong>FastAPI → Roboflow → LLM</strong>
+                  <p>Detect likely components, enrich their descriptions, and return structured JSON.</p>
+                  <div className="case-stage-pipeline"><span>Computer vision</span><span>LLM enrichment</span><span>JSON</span></div>
+                </div>
+                <div className="case-stage-arrow" aria-hidden="true">↓</div>
+                <div className="case-stage">
+                  <span className="case-stage-number">03 / Presentation</span>
+                  <strong>Unity mixed-reality interface</strong>
+                  <p>World-space labels, highlighted board regions, category filters, and adjustable detail.</p>
+                </div>
+                <figcaption>Architecture based on Figure 1 of the BoardWhisperer paper: capture, backend analysis, and interactive presentation.</figcaption>
+              </figure>
+              <p>
+                The Unity frontend uses Meta XR passthrough to capture an
+                image and sends it to a Python FastAPI service. The service
+                passes the image to Roboflow's
+                <code> printed-circuit-board/3 </code>
+                detector, which returns candidate components and locations.
+                The detections are enriched with short, functional
+                explanations using <code>gpt-5.4-mini</code>.
+              </p>
+              <p>
+                The backend then returns compact structured JSON, including
+                component types, bounding boxes, and explanatory fields.
+                Unity remains responsible for presentation—where a label
+                appears, what it shows, and how it responds to interaction.
+                That boundary mattered: recognition, explanation, and
+                interface behavior could be changed without turning the
+                entire application into one tightly coupled system.
+              </p>
+            </section>
 
-            <OutlineSection id="evaluation" number="08" label="Evaluation" heading="Be precise about what the prototype demonstrates—and what it does not." purpose="Present measurements as evidence for an end-to-end prototype, not as a claim that PCB understanding is solved." prompts={[
-              "What boards, component classes, capture conditions, and participants were included?",
-              "How were confidence and latency measured?",
-              "What does the 95% average confidence represent, and what does it leave out?",
-              "What qualitative feedback came from the multidisciplinary engineers?",
-              "Which results validate the workflow, and which require a larger controlled study?",
-            ]} evidence={[
-              "60 component instances across four physical PCBs and nine common component classes.",
-              "95% average confidence among the reported detections.",
-              "A 65% reduction in end-to-end processing time.",
-              "The project establishes a working capture-to-annotation loop and a baseline for broader testing.",
-            ]} visual="A compact results table with rows for dataset, recognition, latency, and user evaluation, each paired with an explicit caveat." />
+            <section id="interface">
+              <p className="section-number">05 / The hardest engineering problem</p>
+              <h2>Information is not useful until someone can navigate it.</h2>
+              <p>
+                The hardest part of BoardWhisperer was not collecting
+                information. It was designing an interface that was accessible,
+                informative, and easy to understand. A model could return
+                dozens of component predictions, but placing dozens of
+                floating cards around a circuit board quickly made the view
+                harder—not easier—to read.
+              </p>
+              <p>
+                My first challenge was choosing where labels belonged.
+                Physical components are small and close together, while
+                readable text cards take up much more space. Simply putting
+                labels near their estimated locations was not enough to
+                preserve a clear correspondence between the two.
+              </p>
+              <p>
+                I introduced a Board Overlay: a captured image of the PCB
+                with boxes marking detected regions. Those boxes help users
+                connect world-space labels back to specific parts. The
+                interaction states are color-coded: red for the default
+                region, yellow when its label is pointed at, and orange
+                when the label is grabbed. Feedback from people who tried
+                the prototype influenced these decisions.
+              </p>
+              <p>
+                The interface also offers category filtering, a Details
+                Mode for expanding explanations, and controls to hide
+                panels or labels when they obstruct the board. Labels can
+                be repositioned to suit the user's physical workspace.
+                These were not decorative features. Each addressed a
+                specific way that otherwise useful information could
+                become visual clutter.
+              </p>
+              <blockquote>
+                The lesson was that engineering does not end when the
+                information is computed. It ends when that information
+                actually helps someone solve the problem.
+              </blockquote>
+            </section>
 
-            <OutlineSection id="limitations" number="09" label="Where it breaks" heading="Show the failure modes; they explain the system better than a feature list can." purpose="Build credibility and turn limitations into concrete design knowledge for the reader." prompts={[
-              "How do poor lighting, oblique angles, small parts, occlusion, and camera quality affect the pipeline?",
-              "Why does the Quest 3S camera place the system at a disadvantage relative to a modern smartphone?",
-              "How might a plausible explanation become misleading after an incorrect detection?",
-              "Where did hand tracking and spatial interaction become unreliable?",
-              "Why should the tool be treated as an aid rather than a replacement for datasheets and verification?",
-            ]} evidence={[
-              "Direct overhead capture under bright white lighting produced noticeably better results.",
-              "Undetected components never reach enrichment and therefore never appear in AR.",
-              "Longer prompts, richer context, and higher-quality inputs improve detail but increase latency.",
-              "Stable interaction with small spatial elements remains difficult on the headset.",
-            ]} visual="A failure gallery using the same board under good lighting, poor lighting, and an oblique angle, with missed or ambiguous detections marked." />
+            <section id="tradeoffs">
+              <p className="section-number">06 / Tradeoffs</p>
+              <h2>Speed, recognition, and legibility constrain each other.</h2>
+              <p>
+                The computer vision model determines what gets passed to
+                the language model. If a component is missed, no amount of
+                downstream explanation will make it appear. If a component
+                is misidentified, a fluent explanation can make an uncertain
+                prediction sound more convincing than it is. BoardWhisperer
+                therefore provides guidance for inspection, not authoritative
+                verification or electrical connectivity analysis.
+              </p>
+              <p>
+                There was also a practical latency tradeoff. Richer prompts
+                and more context can improve explanations but increase the
+                wait between capturing the board and seeing results. By
+                reducing response payloads and restructuring enrichment
+                into batched and parallel work, I reduced end-to-end
+                processing from roughly 45–55 seconds to 15–20 seconds
+                in the project's reported prototype tests.
+              </p>
+              <p>
+                Interaction had its own engineering complexity. In Unity's
+                mixed-reality interaction system, grabbing cards and
+                selecting buttons by ray could interfere with each other.
+                Making an interface movable and clickable simultaneously
+                required careful handling of those competing behaviors.
+              </p>
+            </section>
 
-            <OutlineSection id="lessons" number="10" label="Lessons learned" heading="Extract principles another builder could carry into a different system." purpose="Move beyond BoardWhisperer and articulate the reusable ideas that emerged from building it." prompts={[
-              "Why must dense physical objects have active decluttering rather than passive label placement?",
-              "How does capture guidance become part of UX when input quality controls AI quality?",
-              "What did you learn about dividing responsibility between perception, language, and interface layers?",
-              "What does mixed reality demand that a conventional web or mobile interface does not?",
-              "If rebuilding from zero, which architectural or interaction decision would you make earlier?",
-            ]} evidence={[
-              "Recognition quality, spatial legibility, and interaction simplicity must be designed together.",
-              "A compact response contract kept presentation decisions inside Unity.",
-              "AI uncertainty becomes a spatial interface problem once generated information is attached to a physical object.",
-              "The best interface did not show every available fact; it helped users preserve attention on the artifact.",
-            ]} visual="Three numbered principles set as large editorial pullouts, each paired with one concrete BoardWhisperer example." />
+            <section id="walkthrough">
+              <p className="section-number">07 / The experience</p>
+              <h2>One inspection session, from capture to exploration.</h2>
+              <ol>
+                <li><strong>Frame the board.</strong> The user views a PCB through the headset and captures an image for analysis.</li>
+                <li><strong>Interpret the image.</strong> The backend detects likely component regions and generates short descriptions.</li>
+                <li><strong>Explore annotations.</strong> Unity places labels in world space, with a Board Overlay showing where detections came from.</li>
+                <li><strong>Focus the view.</strong> The user filters categories, expands details, points to highlighted regions, and moves labels out of the way.</li>
+              </ol>
+              <p>
+                What makes this interaction different from a static labeled
+                picture is the ability to adapt the display while inspecting.
+                The most relevant information changes with the board and
+                with the question the user is asking.
+              </p>
+              <p><a className="text-link" href="https://drive.google.com/file/d/1sA9pmHi73k6tGu383e3HEnczwdUjEri3/view?usp=sharing" target="_blank" rel="noreferrer">Watch the prototype demonstration ↗</a></p>
+            </section>
 
-            <OutlineSection id="future" number="11" label="Future work" heading="Move from a compelling prototype toward sustained real-world use." purpose="Prioritize the next experiments instead of ending with a generic feature wishlist." prompts={[
-              "Which improvement would most increase practical usefulness: recognition, capture, interaction, or querying?",
-              "How could labels become truly anchored to components in 3D rather than positioned around a captured view?",
-              "How should users ask follow-up questions and verify answers against authoritative sources?",
-              "How could the interface communicate confidence without creating more clutter?",
-              "What study would test whether the system actually improves learning, inspection speed, or accuracy?",
-            ]} evidence={[
-              "More reliable recognition across varied boards, lighting, viewpoints, and component densities.",
-              "Improved hand tracking, interactive search, follow-up querying, and stable 3D anchoring.",
-              "Tighter integration between displayed labels, language-model context, and datasheet verification.",
-              "A broader evaluation across user experience levels and real inspection tasks.",
-            ]} visual="A restrained roadmap with three horizons: robust capture, interactive investigation, and validated field workflow." />
+            <section id="results">
+              <p className="section-number">08 / Results & evaluation</p>
+              <h2>A working prototype, not a solved recognition problem.</h2>
+              <div className="case-results">
+                <div><strong>60</strong><span>reported component instances</span></div>
+                <div><strong>4</strong><span>physical PCBs tested</span></div>
+                <div><strong>9</strong><span>component classes</span></div>
+                <div><strong>15–20s</strong><span>reported end-to-end latency after optimization</span></div>
+              </div>
+              <p>
+                Across four physical PCBs, the prototype demonstrated
+                detection and interpretation of 60 component instances
+                spanning nine classes. The reported average detector
+                confidence for selected detections was approximately 95%.
+                This is a confidence score, <em>not</em> a measurement of
+                95% accuracy or recall. Missed components and mistaken
+                detections remain important limitations.
+              </p>
+              <p>
+                Approximately ten people tried the prototype. Their
+                design feedback helped refine the visual interactions,
+                especially the color-coded feedback for pointing,
+                selecting, and moving labels. This was useful formative
+                feedback; it was not a controlled study establishing
+                faster inspection or improved learning outcomes.
+              </p>
+            </section>
 
-            <OutlineSection id="closing" number="12" label="Closing idea" heading="End on what mixed reality changes about technical understanding." purpose="Return to the opening scene and leave the reader with a broader idea, not another project summary." prompts={[
-              "How is the user’s relationship with the physical artifact different at the end of the workflow?",
-              "Why might mixed reality be particularly valuable for tasks that are spatial, visually dense, and uncertain?",
-              "What can PCB inspection teach us about future AI interfaces for repair, education, and reverse engineering?",
-              "What single sentence should the reader remember after closing the page?",
-            ]} evidence={[
-              "BoardWhisperer turns a board into an interactive annotated workspace while preserving attention on the artifact.",
-              "The system demonstrates a complete workflow rather than a solved recognition problem.",
-              "The broader opportunity is to place AI interpretation where technical work is already happening—in physical space.",
-            ]} visual="Echo the opening PCB image, now annotated, to create a visual before-and-after bookend." />
+            <section id="limitations">
+              <p className="section-number">09 / Limitations</p>
+              <h2>The headset became the bottleneck.</h2>
+              <p>
+                The biggest limitation eventually became the mixed-reality
+                hardware itself. While preparing a photograph for my
+                final presentation, I noticed how much sharper a phone
+                image looked compared with what I could capture from
+                the Quest 3S. For a pipeline that depends on identifying
+                tiny PCB components, that difference matters.
+              </p>
+              <p>
+                Capture conditions are part of the user experience:
+                bright, even lighting and an overhead viewpoint
+                consistently helped. Oblique angles, tightly packed
+                components, and low-quality captures could prevent
+                a part from being detected at all. The headset's
+                interaction space also constrained how intuitive I
+                could make an information-dense application. Small
+                targets, spatial labels, and hand or controller
+                interactions introduced friction that familiar 2D
+                interfaces do not have in quite the same way.
+              </p>
+            </section>
+
+            <section id="future">
+              <p className="section-number">10 / What I would build next</p>
+              <h2>Keep the interpretation. Rethink the medium.</h2>
+              <p>
+                If I had another month, my first move would not be to
+                add more features to the headset. I would experiment
+                with a 2D web application, closer in interaction
+                style to tools such as EasyEDA or CircuitLab.
+              </p>
+              <p>
+                Users could photograph a PCB with a phone, upload a
+                clearer image, and investigate detections in an
+                interface with familiar zooming, selection, panels,
+                and editable labels. This would trade away the
+                striking in-situ quality of mixed reality in exchange
+                for easier navigation and potentially better input
+                images. It is a hypothesis I would want to test,
+                not a claim that a web version is already better.
+              </p>
+              <p>
+                Beyond the interface, stronger detection, component
+                marking recognition, source-linked explanations, and
+                clearer uncertainty displays would make the tool
+                more useful for serious hardware investigation.
+              </p>
+            </section>
+
+            <section id="takeaways">
+              <p className="section-number">11 / Reflection</p>
+              <h2>The real problem was understanding—not displaying AI.</h2>
+              <p>
+                I started BoardWhisperer hoping to make unfamiliar hardware
+                more understandable to someone who knew software far
+                better than electronics. I finished with a working
+                capture-to-annotation pipeline and a stronger appreciation
+                for everything that happens after an AI system generates
+                an answer.
+              </p>
+              <p>
+                The interface is part of the reasoning process: it decides
+                whether a user can find the right component, understand
+                an uncertain prediction, and keep their attention on the
+                work in front of them. BoardWhisperer demonstrated
+                one way to make that possible in AR. It also taught me
+                to question whether the most technically interesting
+                medium is always the most useful one.
+              </p>
+            </section>
 
             <footer className="article-end">
-              <p className="eyebrow">Supporting material</p>
-              <p>When drafting begins, close with links to the full paper, presentation, extended demo, acknowledgments, and a concise reference list for the related AR-for-PCB systems discussed in the paper.</p>
-              <Link className="text-link" href="/research">Back to research →</Link>
+              <p className="eyebrow">Project & supporting material</p>
+              <p>BoardWhisperer was developed as independent work at Princeton University, advised by Parastoo Abtahi. The prototype, research paper, and demo document its design and limitations.</p>
+              <div className="case-links">
+                <a className="text-link" href="https://github.com/Ehssar/PCBInterpreter" target="_blank" rel="noreferrer">Source code ↗</a>
+                <a className="text-link" href="https://drive.google.com/file/d/1sA9pmHi73k6tGu383e3HEnczwdUjEri3/view?usp=sharing" target="_blank" rel="noreferrer">Demo video ↗</a>
+                <Link className="text-link" href="/research">All research →</Link>
+              </div>
             </footer>
           </div>
         </div>
