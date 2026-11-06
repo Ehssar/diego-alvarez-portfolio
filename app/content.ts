@@ -56,6 +56,16 @@ export const researchPosts = [
     href: "/research/boardwhisperer",
     tags: ["computer vision", "mixed reality", "AI systems"],
   },
+  {
+    slug: "in-the-lab",
+    title: "Independent systems experiments",
+    summary:
+      "Build logs, architecture notes, and honest retrospectives as the next project takes shape.",
+    date: "Fall ’26",
+    category: "In the lab",
+    href: "/research/in-the-lab",
+    tags: ["systems", "build logs", "work in progress"],
+  },
 ];
 
 export const tags = [
