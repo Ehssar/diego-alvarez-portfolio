@@ -1,10 +1,14 @@
 import type { NextConfig } from "next";
 
+const isPagesBuild = process.env.GITHUB_PAGES === "true";
+const basePath = isPagesBuild ? "/diego-alvarez-portfolio" : "";
+
 const nextConfig: NextConfig = {
-  // Generate a static `out/` directory. This keeps the site compatible with
-  // GitHub Pages when publishing is enabled later.
   output: "export",
   trailingSlash: true,
+  basePath,
+  assetPrefix: basePath || undefined,
+  images: { unoptimized: true },
 };
 
 export default nextConfig;
