@@ -48,11 +48,11 @@ export const projects: Project[] = [
 export const researchPosts = [
   {
     slug: "boardwhisperer",
-    title: "Building BoardWhisperer",
+    title: "Building BoardWhisperer: PCB Interpreter",
     summary:
-      "A mixed-reality PCB interpreter built to bridge the gap between software security and hardware understanding—and what it taught me about interface design.",
+      "The thought process behind developing a mixed-reality PCB interpreter. Turning interest in hardware attacks into a tool that others can use to simplify learning hardware.",
     date: "Spring 2026",
-    category: "Engineering case study",
+    category: "Engineering Entry",
     href: "/research/boardwhisperer",
     tags: ["computer vision", "mixed reality", "AI systems"],
   },
