@@ -17,25 +17,22 @@ export default function InTheLabPage() {
   return (
     <main>
       <SiteHeader />
-      <article className="page-shell shell">
-        <div className="page-intro">
-          <p className="eyebrow">{labPost.category} · {labPost.date}</p>
-          <h1>{labPost.title}</h1>
-          <p className="page-intro-copy">{labPost.summary}</p>
-          <div className="tag-row">
-            {labPost.tags.map((tag) => <span key={tag}>{tag}</span>)}
-          </div>
+      <article className="page-shell shell lab-page">
+        <div className="lab-page-intro">
+          <p className="overline">Notebook / In the lab</p>
+          <h1>In the lab.</h1>
+          <p>Work that has not yet become a case study.</p>
         </div>
-        <section className="outline-notice">
-          <p className="eyebrow">Working notebook</p>
-          <h2>Work in progress</h2>
-          <p>
-            This space is reserved for ongoing experiments, design decisions,
-            measurements, and lessons from projects as they develop. Individual
-            notes will appear here as they are ready to share.
-          </p>
+
+        <section className="lab-teaser" aria-labelledby="boardwhisperer-2d">
+          <p className="lab-teaser-status"><span className="status-dot" aria-hidden="true" /> Up next</p>
+          <h2 id="boardwhisperer-2d">BoardWhisperer 2D</h2>
+          <p className="lab-teaser-line">The headset was only the beginning.</p>
+          <p className="lab-teaser-secondary">A different way to inspect the same unknown hardware. More soon.</p>
+          <Link href="/research/boardwhisperer" className="lab-teaser-link">
+            Where it started <span aria-hidden="true">↗</span>
+          </Link>
         </section>
-        <Link className="text-link" href="/research">← Back to all research</Link>
       </article>
       <SiteFooter />
     </main>
