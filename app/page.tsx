@@ -1,109 +1,83 @@
 import Link from "next/link";
-import { ProjectCard } from "./components/ProjectCard";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
 import { projects, researchPosts } from "./content";
 
 export default function Home() {
-  const featured = projects[0];
-
   return (
     <main>
       <SiteHeader />
+      <div className="notebook-layout shell">
+        <aside className="notebook-rail" aria-label="Profile">
+          <div className="rail-profile">
+            <div className="rail-monogram" aria-hidden="true">DA.</div>
+            <p className="rail-name">Diego Alvarez Rodriguez</p>
+            <p className="rail-subline">Software engineering<br />&amp; security research</p>
+          </div>
+          <div className="rail-links">
+            <Link href="/about">About me <span aria-hidden="true">↗</span></Link>
+            <a href="https://github.com/Ehssar" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+            <a href="https://www.linkedin.com/in/dar-pu27/" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+          </div>
+        </aside>
 
-      <section className="hero shell">
-        <div className="hero-copy">
-          <p className="eyebrow">Princeton Computer Science · B.S.E. ’27</p>
-          <h1>I build systems that make complex technology easier to understand.</h1>
-          <p className="hero-intro">
-            Software engineer exploring cybersecurity, AI/ML systems,
-            distributed systems, and developer tooling.
-          </p>
-
-          <div className="topic-row" aria-label="Areas of focus">
-            <span>Cybersecurity</span>
-            <span>AI/ML Systems</span>
-            <span>Distributed Systems</span>
+        <div className="notebook-main">
+          <div className="notebook-intro">
+            <p className="overline">A personal engineering notebook</p>
+            <h1>Research, systems &amp; the things I build.</h1>
+            <p>
+              I am a computer science student at Princeton working across
+              cybersecurity, AI systems, and distributed software. I write
+              about projects, decisions, and what I learn along the way.
+            </p>
           </div>
 
-          <div className="action-row">
-            <Link className="button button-primary" href="/research/boardwhisperer">
-              Read the BoardWhisperer case study <span aria-hidden="true">→</span>
-            </Link>
-            <Link className="button button-secondary" href="/projects">
-              View projects <span aria-hidden="true">→</span>
-            </Link>
-          </div>
-
-          <div className="currently-building">
-            <span className="status-dot" aria-hidden="true" />
-            <div>
-              <strong>Currently building</strong>
-              <p>New systems experiments and independent research for Fall ’26.</p>
+          <section className="notebook-section" id="writing">
+            <div className="notebook-section-head">
+              <h2>Writing</h2><Link href="/research">All writing <span aria-hidden="true">↗</span></Link>
             </div>
-          </div>
-        </div>
-
-        <Link className="featured-panel" href="/research/boardwhisperer">
-          <div className="featured-visual" aria-hidden="true" />
-          <div className="featured-content">
-            <p className="eyebrow">Featured project · 01</p>
-            <h2>{featured.shortTitle}</h2>
-            <p>{featured.description}</p>
-            <div className="metric-row">
-              <span><strong>95%</strong> avg. confidence</span>
-              <span><strong>65%</strong> less latency</span>
+            <div className="post-feed">
+              {researchPosts.map(post => (
+                <Link href={post.href} className="post-item" key={post.slug}>
+                  <div className="post-meta"><time>{post.date}</time><span>{post.category}</span></div>
+                  <h3>{post.title}</h3>
+                  <p>{post.summary}</p>
+                  <span className="post-read">Read note <span aria-hidden="true">↗</span></span>
+                </Link>
+              ))}
             </div>
+          </section>
+
+          <section className="notebook-section" id="projects">
+            <div className="notebook-section-head">
+              <h2>Selected projects</h2><Link href="/projects">All projects <span aria-hidden="true">↗</span></Link>
+            </div>
+            <div className="project-feed">
+              {projects.map((project) => (
+                <Link className="project-line" href={project.href} key={project.slug}>
+                  <div><span className="project-line-date">{project.period}</span><h3>{project.shortTitle}</h3><p>{project.description}</p></div>
+                  <span className="project-line-arrow" aria-hidden="true">↗</span>
+                </Link>
+              ))}
+            </div>
+          </section>
+        </div>
+
+        <aside className="notebook-side" aria-label="Background">
+          <div className="side-section">
+            <p className="side-heading">Currently</p>
+            <p>Princeton University<br />B.S.E. Computer Science, 2027</p>
           </div>
-        </Link>
-      </section>
-
-      <section className="section shell" id="research">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">Research & writing</p>
-            <h2>Notes from the workbench.</h2>
+          <div className="side-section">
+            <p className="side-heading">Interests</p>
+            <p>Vulnerability research<br />Hardware security<br />AI-assisted tooling<br />Distributed systems</p>
           </div>
-          <Link className="text-link" href="/research">All research →</Link>
-        </div>
-
-        <div className="research-list">
-          {researchPosts.map((post) => (
-            <Link className={`research-row${post.slug === "in-the-lab" ? " upcoming-row" : ""}`} href={post.href} key={post.slug}>
-              <span className="mono-meta">{post.date}</span>
-              <div>
-                <h3>{post.title}</h3>
-                <p>{post.summary}</p>
-              </div>
-              <span className="research-category">{post.category}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="section shell">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">Selected work</p>
-            <h2>Three ways I like to build.</h2>
+          <div className="side-section">
+            <p className="side-heading">Elsewhere</p>
+            <Link href="/resume">Résumé ↗</Link>
           </div>
-          <Link className="text-link" href="/projects">All projects →</Link>
-        </div>
-
-        <div className="project-grid">
-          {projects.map((project) => <ProjectCard key={project.slug} project={project} />)}
-        </div>
-      </section>
-
-      <section className="closing-note shell">
-        <p className="eyebrow">A working notebook</p>
-        <p>
-          This site is where finished projects meet the decisions, tradeoffs,
-          and unfinished questions behind them.
-        </p>
-        <Link className="text-link" href="/about">More about me →</Link>
-      </section>
-
+        </aside>
+      </div>
       <SiteFooter />
     </main>
   );
