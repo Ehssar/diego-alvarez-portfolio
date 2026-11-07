@@ -1,9 +1,8 @@
 import Link from "next/link";
 
 const links = [
-  ["Research", "/research"],
+  ["Writing", "/research"],
   ["Projects", "/projects"],
-  ["Tags", "/tags"],
   ["About", "/about"],
   ["Résumé", "/resume"],
 ];
@@ -12,12 +11,10 @@ export function SiteHeader() {
   return (
     <header className="site-header shell">
       <Link className="wordmark" href="/" aria-label="Diego Alvarez Rodriguez, home">
-        <span>Diego</span><i>/</i><span>AR</span>
+        <span>Diego Alvarez</span><span className="wordmark-mark">/</span>
       </Link>
       <nav aria-label="Primary navigation">
-        {links.map(([label, href]) => (
-          <Link href={href} key={href}>{label}</Link>
-        ))}
+        {links.map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}
       </nav>
     </header>
   );
