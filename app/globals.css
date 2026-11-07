@@ -874,3 +874,104 @@ body:has(.site-sidebar) .case-study .article-layout { max-width: 100%; }
   body:has(.site-sidebar) .notebook-layout { padding-block: 38px 55px; }
   body:has(.site-sidebar) .notebook-intro h1 { font-size: clamp(2.1rem, 9vw, 3rem); }
 }
+
+
+/* Research and Projects: quiet navigation labels and resume-backed cards. */
+.writing-eyebrow { margin: 0 0 20px; }
+.projects-page {
+  max-width: 900px;
+  padding-top: 63px;
+  padding-bottom: 110px;
+}
+.projects-eyebrow { margin: 0 0 21px; }
+.projects-card-list {
+  display: grid;
+  gap: 18px;
+}
+.projects-card {
+  padding: clamp(24px,3.8vw,39px);
+  background: #f5f8fc;
+  border: 1px solid #e7edf4;
+  border-radius: 15px;
+  scroll-margin-top: 25px;
+  transition: background .18s ease, border-color .18s ease;
+}
+.projects-card:hover {
+  background: #f0f6fc;
+  border-color: #cbdff1;
+}
+.projects-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  font-family: var(--mono);
+  color: var(--muted);
+  font-size: .7rem;
+  line-height: 1.7;
+}
+.projects-card-top span:first-child {
+  color: var(--orange);
+}
+.projects-card h1 {
+  margin: 17px 0 3px;
+  font-family: var(--sans);
+  color: #1f2937;
+  font-weight: 740;
+  font-size: clamp(1.55rem,2.7vw,2.15rem);
+  line-height: 1.25;
+  letter-spacing: -.04em;
+}
+.projects-subtitle {
+  margin: 0 0 21px;
+  color: var(--muted);
+  font-size: .92rem;
+}
+.projects-description {
+  max-width: 720px;
+  margin: 0 0 18px;
+  color: #404c60;
+  font-size: 1rem;
+  line-height: 1.78;
+}
+.projects-highlights {
+  margin: 0 0 25px;
+  padding-left: 19px;
+  color: #4f5b6b;
+  font-size: .91rem;
+  line-height: 1.73;
+}
+.projects-highlights li { padding-left: 5px; margin-bottom: 7px; }
+.projects-highlights li::marker { color: #8ea7c2; }
+.projects-card-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 17px;
+}
+.projects-tech {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.projects-tech span {
+  padding: 5px 9px;
+  border-radius: 5px;
+  background: #e8eff7;
+  font-size: .71rem;
+  color: #50647c;
+}
+.projects-read-link {
+  color: var(--orange);
+  font-size: .82rem;
+  font-weight: 650;
+  white-space: nowrap;
+}
+.projects-read-link:hover { text-decoration: underline; }
+@media (max-width: 760px) {
+  .projects-page { padding-top: 36px; padding-bottom: 70px; }
+  .projects-card { padding: 21px; }
+  .projects-card h1 { margin-top: 13px; }
+}
