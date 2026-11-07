@@ -8,6 +8,7 @@ export default function ResearchPage() {
     <main>
       <SiteHeader />
       <div className="simple-page shell">
+        <p className="overline writing-eyebrow">Notebook / Writing</p>
         <div className="post-feed">
           {researchPosts.map(post => (
             <Link href={post.href} className="post-item" key={post.slug}>
