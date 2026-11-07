@@ -1,45 +1,28 @@
 import Link from "next/link";
-import { PageIntro } from "../components/PageIntro";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 import { researchPosts } from "../content";
 
 export default function ResearchPage() {
-  const labPost = researchPosts.find((post) => post.slug === "in-the-lab");
-
   return (
     <main>
       <SiteHeader />
-      <div className="page-shell shell">
-        <PageIntro eyebrow="Research & writing" title="Notes from building things that have to work.">
-          <p>Case studies, build logs, and technical explanations focused on the choices behind the final result.</p>
-        </PageIntro>
-
-        <div className="archive-list">
-          {researchPosts.map((post) => (
-            <Link href={post.href} className="archive-entry" key={post.slug}>
-              <div className="archive-meta">
-                <span>{post.date}</span>
-                <span>{post.category}</span>
-              </div>
-              <div>
-                <h2>{post.title}</h2>
-                <p>{post.summary}</p>
-                <div className="tag-row">{post.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
-              </div>
-              <span aria-hidden="true">→</span>
+      <div className="simple-page shell">
+        <div className="simple-page-header">
+          <p className="overline">Notebook / Writing</p>
+          <h1>Writing</h1>
+          <p>Project notes, research, and lessons from the workbench. Finished work and experiments share the same shelf.</p>
+        </div>
+        <div className="post-feed">
+          {researchPosts.map(post => (
+            <Link href={post.href} className="post-item" key={post.slug}>
+              <div className="post-meta"><time>{post.date}</time><span>{post.category}</span></div>
+              <h2>{post.title}</h2>
+              <p>{post.summary}</p>
+              <span className="post-read">Read note <span aria-hidden="true">↗</span></span>
             </Link>
           ))}
         </div>
-
-        {labPost && (
-          <aside className="in-the-lab">
-            <p className="eyebrow"><span className="status-dot" /> {labPost.category}</p>
-            <h2>{labPost.title}</h2>
-            <p>{labPost.summary}</p>
-            <Link className="text-link" href={labPost.href}>Explore the lab →</Link>
-          </aside>
-        )}
       </div>
       <SiteFooter />
     </main>
