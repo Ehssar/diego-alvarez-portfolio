@@ -8,11 +8,6 @@ export default function ResearchPage() {
     <main>
       <SiteHeader />
       <div className="simple-page shell">
-        <div className="simple-page-header">
-          <p className="overline">Notebook / Writing</p>
-          <h1>Writing</h1>
-          <p>Project notes, research, and lessons from the workbench. Finished work and experiments share the same shelf.</p>
-        </div>
         <div className="post-feed">
           {researchPosts.map(post => (
             <Link href={post.href} className="post-item" key={post.slug}>
