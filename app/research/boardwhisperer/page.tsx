@@ -10,16 +10,10 @@ export const metadata: Metadata = {
 
 const sections = [
   ["motivation", "Why I built it"],
-  ["problem", "The problem"],
-  ["approach", "The approach"],
-  ["architecture", "Architecture"],
-  ["interface", "Engineering the interface"],
-  ["tradeoffs", "Hard tradeoffs"],
-  ["walkthrough", "The experience"],
-  ["results", "Results & evaluation"],
-  ["limitations", "Limitations"],
-  ["future", "What I would build next"],
-  ["takeaways", "What I learned"],
+  ["architecture", "How it works"],
+  ["interface", "Design & tradeoffs"],
+  ["results", "Results & limitations"],
+  ["future", "Reflection & next steps"],
 ];
 
 export default function BoardWhispererCaseStudy() {
@@ -54,7 +48,7 @@ export default function BoardWhispererCaseStudy() {
           <div className="article-body case-prose">
             <section id="motivation">
               <p className="section-number">01 / Motivation</p>
-              <h2>Learning to read what is in front of me.</h2>
+              <h2>A software researcher learning to read hardware.</h2>
               <p>
                 My background is in software and cybersecurity research. Lately,
                 I had become interested in hardware attacks, but there was a
@@ -83,11 +77,7 @@ export default function BoardWhispererCaseStudy() {
                 unfamiliar PCB, identifies likely components, and presents
                 explanations as interactive annotations in mixed reality.
               </p>
-            </section>
 
-            <section id="problem">
-              <p className="section-number">02 / The problem</p>
-              <h2>Finding information is only half the work.</h2>
               <p>
                 Printed circuit boards can be dense, visually repetitive, and
                 poorly documented. In repair, debugging, and reverse engineering,
@@ -104,11 +94,7 @@ export default function BoardWhispererCaseStudy() {
                 component identities, make their locations understandable,
                 and let the user control what information stays visible.
               </p>
-            </section>
 
-            <section id="approach">
-              <p className="section-number">03 / Design approach</p>
-              <h2>Keep the board at the center.</h2>
               <p>
                 Three goals shaped the prototype: interpret components in
                 context, minimize the effort of switching tools, and make
@@ -127,7 +113,7 @@ export default function BoardWhispererCaseStudy() {
             </section>
 
             <section id="architecture">
-              <p className="section-number">04 / System architecture</p>
+              <p className="section-number">02 / The system</p>
               <h2>From a captured board to an annotated workspace.</h2>
               <figure className="case-architecture">
                 <div className="case-stage">
@@ -171,8 +157,8 @@ export default function BoardWhispererCaseStudy() {
             </section>
 
             <section id="interface">
-              <p className="section-number">05 / The hardest engineering problem</p>
-              <h2>Information is not useful until someone can navigate it.</h2>
+              <p className="section-number">03 / The design challenge</p>
+              <h2>Information is only useful when someone can navigate it.</h2>
               <p>
                 The hardest part of BoardWhisperer was not collecting
                 information. It was designing an interface that was accessible,
@@ -211,11 +197,7 @@ export default function BoardWhispererCaseStudy() {
                 information is computed. It ends when that information
                 actually helps someone solve the problem.
               </blockquote>
-            </section>
 
-            <section id="tradeoffs">
-              <p className="section-number">06 / Tradeoffs</p>
-              <h2>Speed, recognition, and legibility constrain each other.</h2>
               <p>
                 The computer vision model determines what gets passed to
                 the language model. If a component is missed, no amount of
@@ -241,11 +223,7 @@ export default function BoardWhispererCaseStudy() {
                 Making an interface movable and clickable simultaneously
                 required careful handling of those competing behaviors.
               </p>
-            </section>
 
-            <section id="walkthrough">
-              <p className="section-number">07 / The experience</p>
-              <h2>One inspection session, from capture to exploration.</h2>
               <ol>
                 <li><strong>Frame the board.</strong> The user views a PCB through the headset and captures an image for analysis.</li>
                 <li><strong>Interpret the image.</strong> The backend detects likely component regions and generates short descriptions.</li>
@@ -262,8 +240,8 @@ export default function BoardWhispererCaseStudy() {
             </section>
 
             <section id="results">
-              <p className="section-number">08 / Results & evaluation</p>
-              <h2>A working prototype, not a solved recognition problem.</h2>
+              <p className="section-number">04 / Results and limits</p>
+              <h2>What the prototype proved—and where it struggled.</h2>
               <div className="case-results">
                 <div><strong>60</strong><span>reported component instances</span></div>
                 <div><strong>4</strong><span>physical PCBs tested</span></div>
@@ -287,11 +265,7 @@ export default function BoardWhispererCaseStudy() {
                 feedback; it was not a controlled study establishing
                 faster inspection or improved learning outcomes.
               </p>
-            </section>
 
-            <section id="limitations">
-              <p className="section-number">09 / Limitations</p>
-              <h2>The headset became the bottleneck.</h2>
               <p>
                 The biggest limitation eventually became the mixed-reality
                 hardware itself. While preparing a photograph for my
@@ -315,7 +289,7 @@ export default function BoardWhispererCaseStudy() {
             </section>
 
             <section id="future">
-              <p className="section-number">10 / What I would build next</p>
+              <p className="section-number">05 / Looking back</p>
               <h2>Keep the interpretation. Rethink the medium.</h2>
               <p>
                 If I had another month, my first move would not be to
@@ -339,11 +313,7 @@ export default function BoardWhispererCaseStudy() {
                 clearer uncertainty displays would make the tool
                 more useful for serious hardware investigation.
               </p>
-            </section>
 
-            <section id="takeaways">
-              <p className="section-number">11 / Reflection</p>
-              <h2>The real problem was understanding—not displaying AI.</h2>
               <p>
                 I started BoardWhisperer hoping to make unfamiliar hardware
                 more understandable to someone who knew software far
