@@ -1,29 +1,13 @@
 import Link from "next/link";
-import Image from "next/image";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
 import { projects, researchPosts } from "./content";
-
-const pagesBasePath = process.env.GITHUB_PAGES === "true" ? "/diego-alvarez-portfolio" : "";
 
 export default function Home() {
   return (
     <main>
       <SiteHeader />
       <div className="notebook-layout shell">
-        <aside className="notebook-rail" aria-label="Profile">
-          <div className="rail-profile">
-            <div className="rail-avatar"><Image src={`${pagesBasePath}/profile.webp`} alt="Portrait of Diego Alvarez Rodriguez" width={64} height={64} priority /></div>
-            <p className="rail-name">Diego Alvarez Rodriguez</p>
-            <p className="rail-subline">Software engineering<br />&amp; security research</p>
-          </div>
-          <div className="rail-links">
-            <Link href="/about">About me <span aria-hidden="true">↗</span></Link>
-            <a href="https://github.com/Ehssar" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
-            <a href="https://www.linkedin.com/in/dar-pu27/" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
-          </div>
-        </aside>
-
         <div className="notebook-main">
           <div className="notebook-intro">
             <p className="overline">A personal engineering notebook</p>
@@ -66,20 +50,6 @@ export default function Home() {
           </section>
         </div>
 
-        <aside className="notebook-side" aria-label="Background">
-          <div className="side-section">
-            <p className="side-heading">Currently</p>
-            <p>Princeton University<br />B.S.E. Computer Science, 2027</p>
-          </div>
-          <div className="side-section">
-            <p className="side-heading">Interests</p>
-            <p>Vulnerability research<br />Hardware security<br />AI-assisted tooling<br />Distributed systems</p>
-          </div>
-          <div className="side-section">
-            <p className="side-heading">Elsewhere</p>
-            <Link href="/resume">Résumé ↗</Link>
-          </div>
-        </aside>
       </div>
       <SiteFooter />
     </main>
