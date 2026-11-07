@@ -1,51 +1,54 @@
 import Link from "next/link";
-import { PageIntro } from "../components/PageIntro";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 
 const projectDetails = [
   {
     id: "boardwhisperer",
-    number: "01",
     title: "BoardWhisperer",
-    subtitle: "Mixed-Reality & AI PCB Component Identification",
+    subtitle: "Understanding unfamiliar electronics in mixed reality",
     period: "Jan 2026 — Present",
-    summary: "A Meta Quest 3 application that combines computer vision, LLM-generated explanations, and mixed reality to identify and explain components on unfamiliar printed circuit boards.",
-    bullets: [
-      "Unity/C# capture to FastAPI/Python processing pipeline",
-      "60 component instances across four PCBs and nine classes",
-      "95% average confidence and 65% lower end-to-end latency",
+    category: "Independent research",
+    description:
+      "A Meta Quest prototype that captures unfamiliar printed circuit boards, identifies likely components with computer vision, and explains them through interactive mixed-reality annotations.",
+    highlights: [
+      "Built a Unity/C# to FastAPI/Python pipeline with YOLO detection, batched LLM enrichment, and structured JSON output.",
+      "Demonstrated 60 detected component instances across four PCBs and nine component classes; selected detections averaged 95% model confidence.",
+      "Reduced processing time by approximately 65%, from 45–55 to 15–20 seconds; refined the interface with feedback from around 10 evaluators.",
     ],
-    tags: ["Unity", "C#", "Python", "YOLO", "FastAPI"],
+    tags: ["Unity", "C#", "FastAPI", "Computer vision", "Mixed reality"],
     href: "/research/boardwhisperer",
+    linkLabel: "Read case study",
   },
   {
     id: "stylesync",
-    number: "02",
     title: "StyleSync",
-    subtitle: "Full-Stack Wardrobe & Outfit Management",
+    subtitle: "A wardrobe manager and outfit-building web application",
     period: "Jan 2025 — Jun 2025",
-    summary: "A deployed wardrobe-management platform built by a five-person team and used by approximately 50 users.",
-    bullets: [
-      "Flask and PostgreSQL backend with Google OAuth",
-      "User-scoped CRUD, custom tagging, search, and filtering",
-      "Interactive Outfit Builder, social feed, and Cloudinary media",
+    category: "Full-stack · Team of five",
+    description:
+      "A mobile-friendly wardrobe and outfit-planning application developed with a five-person team, with approximately 50 users.",
+    highlights: [
+      "Built clothing-upload and filtering workflows using user-created tags stored in PostgreSQL.",
+      "Developed an interactive outfit builder for arranging and saving outfits.",
+      "Contributed to a social feed for sharing outfits and discovering clothing ideas.",
     ],
-    tags: ["Flask", "PostgreSQL", "JavaScript", "Cloudinary"],
+    tags: ["Python", "Flask", "PostgreSQL", "JavaScript", "Bootstrap", "jQuery"],
   },
   {
     id: "raft",
-    number: "03",
     title: "Fault-Tolerant Key/Value Store",
-    subtitle: "Raft Consensus in Go",
-    period: "Mar 2025 — May 2025",
-    summary: "A reusable Raft implementation and linearizable key/value service supporting Put, Append, and Get operations through RPC.",
-    bullets: [
-      "Leader election, log replication, persistence, and conflict resolution",
-      "Quorum replication through leader failures and network disruption",
-      "Client retries, duplicate suppression, and concurrent state updates",
+    subtitle: "Consensus and replicated state in Go",
+    period: "Mar 2025 — Apr 2025",
+    category: "Distributed systems",
+    description:
+      "A reusable implementation of the Raft consensus protocol and a replicated key/value service, designed to preserve consistent operations through leader failures and network disruption.",
+    highlights: [
+      "Implemented leader election and replicated logs in Go, with a reusable Raft module.",
+      "Built Put, Append, and Get operations on top of Raft using RPC.",
+      "Used majority-quorum replication, client retries, and duplicate-request suppression to preserve linearizable behavior.",
     ],
-    tags: ["Go", "Raft", "RPC", "Concurrent Programming"],
+    tags: ["Go", "Raft", "RPC", "Concurrency", "Fault tolerance"],
   },
 ];
 
@@ -53,23 +56,30 @@ export default function ProjectsPage() {
   return (
     <main>
       <SiteHeader />
-      <div className="page-shell shell">
-        <PageIntro eyebrow="Selected work" title="Projects across AI, product engineering, and distributed systems.">
-          <p>Three projects that best represent how I approach unfamiliar technical problems.</p>
-        </PageIntro>
-
-        <div className="project-detail-list">
+      <div className="projects-page shell">
+        <p className="overline projects-eyebrow">Notebook / Projects</p>
+        <div className="projects-card-list">
           {projectDetails.map((project) => (
-            <article className="project-detail" id={project.id} key={project.id}>
-              <div className="project-detail-number">{project.number}</div>
-              <div className="project-detail-main">
-                <p className="mono-meta">{project.period}</p>
-                <h2>{project.title}</h2>
-                <h3>{project.subtitle}</h3>
-                <p className="project-summary">{project.summary}</p>
-                <ul>{project.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>
-                <div className="tag-row">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
-                {project.href && <Link className="text-link" href={project.href}>Read the case study →</Link>}
+            <article id={project.id} className="projects-card" key={project.id}>
+              <div className="projects-card-top">
+                <span>{project.category}</span>
+                <span>{project.period}</span>
+              </div>
+              <h1>{project.title}</h1>
+              <p className="projects-subtitle">{project.subtitle}</p>
+              <p className="projects-description">{project.description}</p>
+              <ul className="projects-highlights">
+                {project.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
+              </ul>
+              <div className="projects-card-bottom">
+                <div className="projects-tech">
+                  {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
+                </div>
+                {project.href && (
+                  <Link className="projects-read-link" href={project.href}>
+                    {project.linkLabel} <span aria-hidden="true">↗</span>
+                  </Link>
+                )}
               </div>
             </article>
           ))}
