@@ -1,7 +1,10 @@
 import Link from "next/link";
+import Image from "next/image";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
 import { projects, researchPosts } from "./content";
+
+const pagesBasePath = process.env.GITHUB_PAGES === "true" ? "/diego-alvarez-portfolio" : "";
 
 export default function Home() {
   return (
@@ -10,7 +13,7 @@ export default function Home() {
       <div className="notebook-layout shell">
         <aside className="notebook-rail" aria-label="Profile">
           <div className="rail-profile">
-            <div className="rail-monogram" aria-hidden="true">DA.</div>
+            <div className="rail-avatar"><Image src={`${pagesBasePath}/profile.webp`} alt="Portrait of Diego Alvarez Rodriguez" width={64} height={64} priority /></div>
             <p className="rail-name">Diego Alvarez Rodriguez</p>
             <p className="rail-subline">Software engineering<br />&amp; security research</p>
           </div>
