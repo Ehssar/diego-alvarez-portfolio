@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { PageIntro } from "../components/PageIntro";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
@@ -68,7 +69,7 @@ export default function ProjectsPage() {
                 <p className="project-summary">{project.summary}</p>
                 <ul>{project.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>
                 <div className="tag-row">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
-                {project.href && <a className="text-link" href={project.href}>Read the case study →</a>}
+                {project.href && <Link className="text-link" href={project.href}>Read the case study →</Link>}
               </div>
             </article>
           ))}
