@@ -520,3 +520,70 @@ a:focus-visible { outline: 2px solid var(--orange); outline-offset: 4px; }
   .case-study .case-prose > section { padding-block: 27px 36px; }
   .project-detail { grid-template-columns: 1fr; gap: 8px; }
 }
+
+
+/* Profile photo and typographic cleanup (November 2026). */
+:root {
+  --serif: var(--font-geist-sans), Arial, sans-serif;
+}
+body {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.65;
+}
+.rail-avatar {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 20px;
+  flex: 0 0 auto;
+}
+.rail-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 14px;
+}
+.notebook-intro h1,
+.simple-page-header h1,
+.case-study .article-header h1,
+.case-study .case-prose h2 {
+  color: #1f2937;
+  font-family: var(--sans);
+}
+.notebook-intro > p:last-child,
+.post-item p,
+.project-line p,
+.simple-page-header > p:last-child,
+.case-study .article-body p {
+  font-family: var(--sans);
+  line-height: 1.8;
+}
+.post-item p,
+.project-line p {
+  font-size: .96rem;
+  color: #4f5b6b;
+}
+.case-study .article-body p { font-size: 1rem; }
+.overline,
+.side-heading,
+.post-meta,
+.project-line-date,
+.eyebrow,
+.section-number {
+  font-family: var(--mono);
+}
+@media (max-width: 780px) {
+  /* Keep the photo and identity visible when the desktop sidebar collapses. */
+  .notebook-rail {
+    display: block;
+    margin-bottom: 34px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--line);
+  }
+  .rail-profile { display: flex; align-items: center; column-gap: 15px; flex-wrap: wrap; }
+  .rail-avatar { margin: 0; width: 58px; height: 58px; }
+  .rail-name { flex: 1 1 calc(100% - 90px); margin: 0; }
+  .rail-subline, .rail-links { display: none; }
+}
