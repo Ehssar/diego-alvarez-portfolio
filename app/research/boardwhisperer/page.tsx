@@ -67,7 +67,7 @@ export default function BoardWhispererCaseStudy() {
                 Hardware security demands a similarly intimate understanding
                 of a device to the one software security demands of code. A PCB
                 is not just a collection of anonymous parts; it is a physical
-                record of a system's design. Without experience reading one,
+                record of a system&apos;s design. Without experience reading one,
                 even knowing where to begin can be difficult.
               </p>
               <p>
@@ -153,7 +153,7 @@ export default function BoardWhispererCaseStudy() {
               <p>
                 The Unity frontend uses Meta XR passthrough to capture an
                 image and sends it to a Python FastAPI service. The service
-                passes the image to Roboflow's
+                passes the image to Roboflow&apos;s
                 <code> printed-circuit-board/3 </code>
                 detector, which returns candidate components and locations.
                 The detections are enriched with short, functional
@@ -201,7 +201,7 @@ export default function BoardWhispererCaseStudy() {
                 The interface also offers category filtering, a Details
                 Mode for expanding explanations, and controls to hide
                 panels or labels when they obstruct the board. Labels can
-                be repositioned to suit the user's physical workspace.
+                be repositioned to suit the user&apos;s physical workspace.
                 These were not decorative features. Each addressed a
                 specific way that otherwise useful information could
                 become visual clutter.
@@ -232,10 +232,10 @@ export default function BoardWhispererCaseStudy() {
                 reducing response payloads and restructuring enrichment
                 into batched and parallel work, I reduced end-to-end
                 processing from roughly 45–55 seconds to 15–20 seconds
-                in the project's reported prototype tests.
+                in the project&apos;s reported prototype tests.
               </p>
               <p>
-                Interaction had its own engineering complexity. In Unity's
+                Interaction had its own engineering complexity. In Unity&apos;s
                 mixed-reality interaction system, grabbing cards and
                 selecting buttons by ray could interfere with each other.
                 Making an interface movable and clickable simultaneously
@@ -305,7 +305,7 @@ export default function BoardWhispererCaseStudy() {
                 bright, even lighting and an overhead viewpoint
                 consistently helped. Oblique angles, tightly packed
                 components, and low-quality captures could prevent
-                a part from being detected at all. The headset's
+                a part from being detected at all. The headset&apos;s
                 interaction space also constrained how intuitive I
                 could make an information-dense application. Small
                 targets, spatial labels, and hand or controller
